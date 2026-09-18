@@ -1,0 +1,31 @@
+# Python缓存
+__pycache__/
+*.py[cod]
+
+# VS Code配置
+.vscode/
+
+# Conda环境
+env/
+venv/
+.venv/
+
+# 数据
+data/
+dataset/
+
+# 模型
+*.pth
+*.pt
+*.ckpt
+
+# 输出
+results/
+outputs/
+
+# 日志
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
