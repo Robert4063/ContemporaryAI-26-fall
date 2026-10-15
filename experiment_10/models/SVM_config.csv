@@ -1,2 +1,0 @@
-model,split,version,val_acc,test_acc,val_f1,test_f1
-SVM,B,subject_body_author,0.964769647696477,0.9402985074626866,0.9650671755326284,0.9408021566520486

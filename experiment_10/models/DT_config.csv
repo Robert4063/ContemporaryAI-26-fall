@@ -1,2 +1,0 @@
-model,split,version,val_acc,test_acc,val_f1,test_f1
-DT,B,subject_body_author,0.7371273712737128,0.6689280868385346,0.7398670879301714,0.6712872190535742
