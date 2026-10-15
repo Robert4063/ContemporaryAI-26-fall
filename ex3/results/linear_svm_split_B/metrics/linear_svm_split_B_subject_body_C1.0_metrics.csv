@@ -1,3 +1,0 @@
-config_id,model,split,version,C,eval_set,accuracy,macro_f1,precision,recall,n_iter,fit_seconds,n_features,converged
-linear_svm_split_B_subject_body_C1.0,linear_svm,split_B,subject_body,1.0,train,0.9992015330565315,0.9992016528303316,0.9992015179888718,0.9992030589515111,41,0.39767589999974007,20000,True
-linear_svm_split_B_subject_body_C1.0,linear_svm,split_B,subject_body,1.0,val,0.9566395663956639,0.9568362619732482,0.9577705580144604,0.9568990042674252,41,0.39767589999974007,20000,True

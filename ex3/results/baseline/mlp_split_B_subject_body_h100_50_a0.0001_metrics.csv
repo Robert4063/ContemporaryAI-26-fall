@@ -1,3 +1,0 @@
-model,split,version,hidden_layer_sizes,alpha,eval_set,accuracy,macro_f1,precision,recall
-mlp,split_B,subject_body,"(100, 50)",0.0001,train,0.9998403066113063,0.999839608474898,0.9998407643312103,0.9998387096774193
-mlp,split_B,subject_body,"(100, 50)",0.0001,val,0.926829268292683,0.9274765774116892,0.9290394850921165,0.9270859581385897
