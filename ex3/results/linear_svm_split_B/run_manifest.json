@@ -1,0 +1,24 @@
+{
+  "status": "complete",
+  "completed_at": "2026-10-15T13:28:05.499932+08:00",
+  "python_version": "3.10.21",
+  "sklearn_version": "1.7.1",
+  "new_model_count": 12,
+  "new_training_splits": [
+    "split_B"
+  ],
+  "training_rows": 6262,
+  "validation_rows": 369,
+  "test_rows": 737,
+  "selection_rule": "validation accuracy desc, macro_f1 desc, config_id asc",
+  "loss_curve_available": false,
+  "existing_models_retrained": false,
+  "data_cleaning_or_splits_changed": false,
+  "limitations": [
+    "Existing SGD SVM and MLP previously accessed test during training.",
+    "Known cross-subset content duplicates remain; these are supplementary results.",
+    "LinearSVC squared_hinge differs from SGD hinge; this is not a solver-only ablation.",
+    "LinearSVC exposes final n_iter_, not an iteration loss history; no synthetic curve created.",
+    "Validation set is small and MLP has more hyperparameter configurations."
+  ]
+}

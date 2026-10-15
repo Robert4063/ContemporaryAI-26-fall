@@ -1,0 +1,29 @@
+{
+  "version_order": [
+    "raw",
+    "body_only",
+    "subject_body",
+    "subject_body_author"
+  ],
+  "version_statistic": "validation mean across hyperparameters, not best configuration",
+  "original_axis_error_corrected": "raw/body_only data were alphabetical while the original labels assumed raw first",
+  "version_source_images": {
+    "version_effect_svm.png": "eed0dcd4c745ffb79653fc114bd24268defa5c3e1e17b3a8ccdd38ed72464bb7",
+    "version_effect_mlp.png": "0eb7959edc2e3d5d1bae9a7c754fcae098ea1bb613ef31d82e5c064032a2cc22"
+  },
+  "combined_loss_image_sha256": "825ceea58f995e95ae4f4a0754238008be99959df4acc0446e98d7aa92459861",
+  "combined_version_image_sha256": "15a9e48a2f9845b1974614126fbd373593e5a20c2e11f85865b9a19dd0c5c5cf",
+  "hidden_size_source_image_sha256": "32ecdbcb6dc4e71c74d64afe9a38e62a748aa1bb8ee098a0efc03175e9b7d639",
+  "loss_sources": {
+    "results/loss/svm_split_B_subject_body_author_C0.1.npy": "99440083b7243d3d49eded6efce8808eb2dda9dca37a0501deb88ac6ab133fb5",
+    "results/loss/svm_split_B_subject_body_author_C1.0.npy": "7286a14a3810b0201ec0b2e0a5776d704325aac1167357eed6794201c3e3aa72",
+    "results/loss/svm_split_B_subject_body_author_C10.0.npy": "5679e21910f426241f9d045fd774198bf75adad2acdf88ccc50be96498608b78",
+    "results/loss/mlp_split_B_subject_body_author_h50_a0.0001.npy": "56e4a49a6ed2c9b50b1f2eae6228527b65aca0f5358a99bb6aacbd3ad5f1380e",
+    "results/loss/mlp_split_B_subject_body_author_h100_a0.0001.npy": "b3bde6b2e232ba68eea235e2f8fcf01adf7c6adf29b23ef98af489ec2b4524b7",
+    "results/loss/mlp_split_B_subject_body_author_h100_50_a0.0001.npy": "cd4ec00ab1dc614799d77507c8abc44bba424f3635588be7c5b159999a997d22",
+    "results/loss/mlp_split_B_subject_body_author_h50_a0.001.npy": "f4f6a199490c50e5af1afa61a8aae84dff57b3f8ac3fe1bfcee62a640351f5ca",
+    "results/loss/mlp_split_B_subject_body_author_h100_a0.001.npy": "6f4adde2cd21dd1be999213b52a65a4dfcec3094a6379ae78304dabb8ddff224",
+    "results/loss/mlp_split_B_subject_body_author_h100_50_a0.001.npy": "fce88ea9b756e4d09f9795912e758808dc2aefcebad69b01957ba32896ddfe89"
+  },
+  "refitted": false
+}

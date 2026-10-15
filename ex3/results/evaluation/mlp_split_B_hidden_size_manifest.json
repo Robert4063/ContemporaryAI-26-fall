@@ -1,0 +1,71 @@
+{
+  "split": "split_B",
+  "version": "subject_body_author",
+  "alpha_values": [
+    0.0001,
+    0.001
+  ],
+  "hidden_layer_sizes": [
+    "(50,)",
+    "(100,)",
+    "(100, 50)"
+  ],
+  "epochs": 300,
+  "train_rows": 6262,
+  "validation_rows": 369,
+  "source": "MLPClassifier.loss_curve_",
+  "definition": "Per-epoch sample-weighted average of mini-batch cross-entropy plus L2 training objectives; not validation loss.",
+  "not_a_fixed_weights_full_dataset_objective": true,
+  "smoothing": false,
+  "refitted": false,
+  "data_file": "results/evaluation/mlp_split_B_hidden_size_loss_data.csv",
+  "data_sha256": "29c4d23e4bf9085006570eb32313a7d1dd6a9357c445252f89e0140194aa0955",
+  "summary_file": "results/evaluation/mlp_split_B_hidden_size_summary.csv",
+  "summary_sha256": "dfb5d32544b5556020b33833e8fc743c6f2da32e4e522acad9dc0ac35ffe1da4",
+  "image_file": "results/evaluation/figures/mlp_split_B_hidden_size_comparison.png",
+  "image_sha256": "32ecdbcb6dc4e71c74d64afe9a38e62a748aa1bb8ee098a0efc03175e9b7d639",
+  "sources": [
+    {
+      "config_id": "mlp_split_B_subject_body_author_h50_a0.0001",
+      "loss_file": "results/loss/mlp_split_B_subject_body_author_h50_a0.0001.npy",
+      "loss_sha256": "56e4a49a6ed2c9b50b1f2eae6228527b65aca0f5358a99bb6aacbd3ad5f1380e",
+      "metrics_file": "results/baseline/mlp_split_B_subject_body_author_h50_a0.0001_metrics.csv",
+      "metrics_sha256": "4055b7ae9284ed799cfb15901a2f0b4eb014757c2c5b94f803a00b2315d4090f"
+    },
+    {
+      "config_id": "mlp_split_B_subject_body_author_h100_a0.0001",
+      "loss_file": "results/loss/mlp_split_B_subject_body_author_h100_a0.0001.npy",
+      "loss_sha256": "b3bde6b2e232ba68eea235e2f8fcf01adf7c6adf29b23ef98af489ec2b4524b7",
+      "metrics_file": "results/baseline/mlp_split_B_subject_body_author_h100_a0.0001_metrics.csv",
+      "metrics_sha256": "9e60f15580134a5fb3b3df81c148c5164a264453f2e78ab07d033242524d9012"
+    },
+    {
+      "config_id": "mlp_split_B_subject_body_author_h100_50_a0.0001",
+      "loss_file": "results/loss/mlp_split_B_subject_body_author_h100_50_a0.0001.npy",
+      "loss_sha256": "cd4ec00ab1dc614799d77507c8abc44bba424f3635588be7c5b159999a997d22",
+      "metrics_file": "results/baseline/mlp_split_B_subject_body_author_h100_50_a0.0001_metrics.csv",
+      "metrics_sha256": "6b6f71ea34ee2659d440c6ebf58340924e7449a59f450aa38aa30c67274967d2"
+    },
+    {
+      "config_id": "mlp_split_B_subject_body_author_h50_a0.001",
+      "loss_file": "results/loss/mlp_split_B_subject_body_author_h50_a0.001.npy",
+      "loss_sha256": "f4f6a199490c50e5af1afa61a8aae84dff57b3f8ac3fe1bfcee62a640351f5ca",
+      "metrics_file": "results/baseline/mlp_split_B_subject_body_author_h50_a0.001_metrics.csv",
+      "metrics_sha256": "fd27fec795580d0bebf821502b00840a7b734a2990558945d335ef2a5dd0caf7"
+    },
+    {
+      "config_id": "mlp_split_B_subject_body_author_h100_a0.001",
+      "loss_file": "results/loss/mlp_split_B_subject_body_author_h100_a0.001.npy",
+      "loss_sha256": "6f4adde2cd21dd1be999213b52a65a4dfcec3094a6379ae78304dabb8ddff224",
+      "metrics_file": "results/baseline/mlp_split_B_subject_body_author_h100_a0.001_metrics.csv",
+      "metrics_sha256": "df4b0ee7b26a637f5de3d16c60a2959cf0965681e1ed5c005d029bf262f1c3ac"
+    },
+    {
+      "config_id": "mlp_split_B_subject_body_author_h100_50_a0.001",
+      "loss_file": "results/loss/mlp_split_B_subject_body_author_h100_50_a0.001.npy",
+      "loss_sha256": "fce88ea9b756e4d09f9795912e758808dc2aefcebad69b01957ba32896ddfe89",
+      "metrics_file": "results/baseline/mlp_split_B_subject_body_author_h100_50_a0.001_metrics.csv",
+      "metrics_sha256": "b666aebb4a22b6b3666ecffb959e1bee63b52b342ed4478b1139a1d6c7fa35e9"
+    }
+  ]
+}

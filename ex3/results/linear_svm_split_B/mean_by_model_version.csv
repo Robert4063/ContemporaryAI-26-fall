@@ -1,0 +1,13 @@
+version,model,mean_val_accuracy
+raw,svm,0.9205058717253838
+raw,mlp,0.95483288166215
+raw,linear_svm,0.955736224028907
+body_only,svm,0.9105691056910569
+body_only,mlp,0.932249322493225
+body_only,linear_svm,0.9349593495934959
+subject_body,svm,0.931345980126468
+subject_body,mlp,0.9476061427280938
+subject_body,linear_svm,0.953026196928636
+subject_body_author,svm,0.9259259259259259
+subject_body_author,mlp,0.95483288166215
+subject_body_author,linear_svm,0.9521228545618788
