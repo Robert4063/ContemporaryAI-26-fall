@@ -18,5 +18,9 @@
   "prediction_reproduced_without_processed_cache": true,
   "reproduced_prediction_sha256": "e064cb6c39d721229a45d10010f23697773f1e74fe72cb66209e01076e775819",
   "upload_files_at_validation": 336,
-  "upload_size_mib_at_validation": 26.58
+  "upload_size_mib_at_validation": 26.58,
+  "published_repository": "https://github.com/Robert4063/ContemporaryAI-26-fall",
+  "published_branch": "lab_1",
+  "published_directory": "ex3",
+  "initial_remote_commit_verified": "310621825074afdc07c76d63b63fe73f2401fdd2"
 }
