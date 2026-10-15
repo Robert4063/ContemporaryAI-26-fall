@@ -1,0 +1,3 @@
+model,split,version,C,eval_set,accuracy,macro_f1,precision,recall
+svm,split_C,subject_body_author,1.0,train,0.9880844645550528,0.9881276301973567,0.9882474155058713,0.9880854676811197
+svm,split_C,subject_body_author,1.0,val,0.940379403794038,0.940031699646856,0.9440771622621773,0.9404572241414346

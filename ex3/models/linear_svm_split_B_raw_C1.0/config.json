@@ -1,0 +1,32 @@
+{
+  "specification": {
+    "model": "linear_svm",
+    "estimator": "sklearn.svm.LinearSVC",
+    "split": "split_B",
+    "version": "raw",
+    "params": {
+      "C": 1.0,
+      "penalty": "l2",
+      "loss": "squared_hinge",
+      "dual": "auto",
+      "multi_class": "ovr",
+      "tol": 0.0001,
+      "max_iter": 10000,
+      "random_state": 42
+    },
+    "input_sha256": {
+      "train": "ffa0805e082dd776dce0afbef3e318f95faf611e3e1d0c664011985c96af448d",
+      "val": "af58b15e30ac9fb602812f34902460bf41e16fdef74cdb70955881598493abb7"
+    },
+    "sklearn_version": "1.7.1"
+  },
+  "n_iter": 41,
+  "fit_seconds": 0.3545120999988285,
+  "converged": true,
+  "loss_curve_available": false,
+  "artifact_sha256": {
+    "model.pkl": "76ee1679e083de6f1378bb0b07d9f2c7be8bf9cde2f0458f0959a88f176ecbd5",
+    "vectorizer.pkl": "9b2c1078b59ace6a3eea5eed84b172eca0058171ca94f046f522f0cc08bbbd4c",
+    "metrics.csv": "7dc6201efbd1d5d73bc882188e61fae9bf13b8bc7d9754b30c69aaff2a06d1b5"
+  }
+}

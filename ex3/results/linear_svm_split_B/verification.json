@@ -1,0 +1,14 @@
+{
+  "original_data_models_metrics_losses_and_other_original_figures_unchanged": 623,
+  "new_models": 12,
+  "new_model_splits": [
+    "split_B"
+  ],
+  "new_saved_models_validation_accuracy_verified": 12,
+  "validation_configurations_compared": 48,
+  "frozen_model_selections_verified": 3,
+  "cached_final_predictions_and_confusion_matrices_verified": 3,
+  "no_classifier_refit_or_test_prediction_on_rerun": true,
+  "figure_readable": true,
+  "status": "passed"
+}

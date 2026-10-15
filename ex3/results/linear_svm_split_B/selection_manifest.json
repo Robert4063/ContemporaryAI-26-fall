@@ -1,0 +1,34 @@
+{
+  "split": "split_B",
+  "rule": "validation accuracy desc, macro_f1 desc, config_id asc",
+  "choices": [
+    {
+      "model": "svm",
+      "config_id": "svm_split_B_subject_body_C1.0",
+      "version": "subject_body",
+      "val_accuracy": 0.943089430894309,
+      "val_macro_f1": 0.9431724428054006,
+      "model_sha256": "5ad948948fec662e01cbac8102087371c20c2859c0c7b77fe384bf241d20fbb1",
+      "vectorizer_sha256": "c7dc2c95d81dd549d55f3d65f2a71b858dd21842873c601a5f6c8f292b6ce32a"
+    },
+    {
+      "model": "mlp",
+      "config_id": "mlp_split_B_subject_body_author_h100_a0.001",
+      "version": "subject_body_author",
+      "val_accuracy": 0.959349593495935,
+      "val_macro_f1": 0.959842903357406,
+      "model_sha256": "5c6c92db81c89c6bf5c37bad2d77668d4951c0a28cffeb1a13d10def5548f990",
+      "vectorizer_sha256": "4451fbffd73b1009118723f3f97d9d0c1df12eb56099ff7d12e4495203eb4942"
+    },
+    {
+      "model": "linear_svm",
+      "config_id": "linear_svm_split_B_raw_C1.0",
+      "version": "raw",
+      "val_accuracy": 0.962059620596206,
+      "val_macro_f1": 0.9624579734230059,
+      "model_sha256": "76ee1679e083de6f1378bb0b07d9f2c7be8bf9cde2f0458f0959a88f176ecbd5",
+      "vectorizer_sha256": "9b2c1078b59ace6a3eea5eed84b172eca0058171ca94f046f522f0cc08bbbd4c"
+    }
+  ],
+  "validation_sha256": "80218ef955f9acf4507102f3177f163c54a75f0a56692d24f5b32619d6afa5b5"
+}
