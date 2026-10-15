@@ -1,0 +1,19 @@
+{
+  "signature": {
+    "config_id": "linear_svm_split_B_raw_C1.0",
+    "test_sha256": "552783654b57d5e511dab64d7aec929baa2fe78bcbb789768997f6ba9f07ae86",
+    "model_sha256": "76ee1679e083de6f1378bb0b07d9f2c7be8bf9cde2f0458f0959a88f176ecbd5",
+    "vectorizer_sha256": "9b2c1078b59ace6a3eea5eed84b172eca0058171ca94f046f522f0cc08bbbd4c"
+  },
+  "n_test": 737,
+  "metrics": {
+    "accuracy": 0.9308005427408412,
+    "macro_f1": 0.9316005898951829,
+    "precision": 0.9331268428642302,
+    "recall": 0.9308913100967896
+  },
+  "output_sha256": {
+    "linear_svm_predictions.csv": "1f26242a6c4dee8395a45979e295f1140d639c15921c436ab28d493ec48d911a",
+    "linear_svm_confusion_matrix.csv": "802638e39c1ea44195b1daa7ca7dae880db2b9de344ba8b7e07f03a32c4f3b10"
+  }
+}

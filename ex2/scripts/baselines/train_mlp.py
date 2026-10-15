@@ -1,0 +1,306 @@
+"""
+scripts/baselines/train_mlp.py
+MLP 训练脚本
+
+使用 sklearn.neural_network.MLPClassifier
+- hidden_layer_sizes ∈ {(50,), (100,), (100,50)} × alpha ∈ {1e-4, 1e-3}
+- max_iter=300
+- early_stopping=False, tol=0, n_iter_no_change=301
+- 记录每个 iteration 的真实 loss
+
+重要: TF-IDF 只在 train 上 fit，val/test 只做 transform
+最终模型 = 在 train 上用最优超参训练得到的那个模型，不重训
+"""
+
+import os
+import sys
+import time
+import json
+import pickle
+import numpy as np
+import pandas as pd
+from pathlib import Path
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, confusion_matrix
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# 项目根目录
+PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
+DATA_PROCESSED = PROJECT_ROOT / "data-processed"
+MODELS_DIR = PROJECT_ROOT / "models"
+RESULTS_DIR = PROJECT_ROOT / "results"
+RANDOM_STATE = 42
+
+# 超参数搜索空间
+HIDDEN_LAYERS = [(50,), (100,), (100, 50)]
+ALPHAS = [1e-4, 1e-3]
+MAX_ITER = 300
+
+
+def load_data(split, version):
+    """加载指定划分和版本的数据"""
+    data_dir = DATA_PROCESSED / f"split_{split}" / version
+    
+    train_df = pd.read_csv(data_dir / "train.csv")
+    val_df = pd.read_csv(data_dir / "val.csv")
+    test_df = pd.read_csv(data_dir / "test.csv")
+    unlabeled_df = pd.read_csv(data_dir / "unlabeled.csv")
+    
+    return {
+        'train': {
+            'text': train_df['text'].fillna('').astype(str).tolist(),
+            'target': train_df['target'].values
+        },
+        'val': {
+            'text': val_df['text'].fillna('').astype(str).tolist(),
+            'target': val_df['target'].values
+        },
+        'test': {
+            'text': test_df['text'].fillna('').astype(str).tolist(),
+            'target': test_df['target'].values
+        },
+        'unlabeled': {
+            'text': unlabeled_df['text'].fillna('').astype(str).tolist()
+        }
+    }
+
+
+def create_vectorizer():
+    """创建 TF-IDF 向量化器"""
+    return TfidfVectorizer(
+        min_df=2,
+        max_df=0.95,
+        max_features=20000
+    )
+
+
+def train_mlp(X_train, y_train, hidden_layer_sizes, alpha, max_iter=MAX_ITER):
+    """训练 MLP 并记录每个 iteration 的 loss"""
+    
+    # 初始化分类器
+    # early_stopping=False: 不早停，保证每个配置完整训练
+    # tol=0: 不因 tolerance 而停止
+    # n_iter_no_change=301: 远大于 max_iter，不会触发
+    clf = MLPClassifier(
+        hidden_layer_sizes=hidden_layer_sizes,
+        activation='relu',
+        solver='adam',
+        alpha=alpha,
+        batch_size='auto',
+        learning_rate='constant',
+        learning_rate_init=0.001,
+        max_iter=max_iter,
+        early_stopping=False,
+        validation_fraction=0.0,  # 不使用验证集早停
+        n_iter_no_change=301,
+        tol=0.0,
+        random_state=RANDOM_STATE,
+        verbose=False,
+        warm_start=False
+    )
+    
+    # 训练
+    clf.fit(X_train, y_train)
+    
+    return clf, clf.loss_curve_
+
+
+def evaluate(clf, X, y, classes=None):
+    """评估模型"""
+    y_pred = clf.predict(X)
+    
+    acc = accuracy_score(y, y_pred)
+    f1 = f1_score(y, y_pred, average='macro', zero_division=0)
+    precision = precision_score(y, y_pred, average='macro', zero_division=0)
+    recall = recall_score(y, y_pred, average='macro', zero_division=0)
+    cm = confusion_matrix(y, y_pred)
+    
+    return {
+        'accuracy': acc,
+        'f1_macro': f1,
+        'precision': precision,
+        'recall': recall,
+        'confusion_matrix': cm.tolist()
+    }, y_pred
+
+
+def train_and_evaluate(split, version, hidden_layer_sizes, alpha, log_file=None):
+    """训练并评估一个配置"""
+    print(f"\n{'='*50}")
+    print(f"MLP 训练: split={split}, version={version}")
+    print(f"hidden={hidden_layer_sizes}, alpha={alpha}")
+    print(f"{'='*50}")
+    
+    # 创建输出目录
+    config_name = f"hidden_{'-'.join(map(str, hidden_layer_sizes))}_alpha_{alpha}"
+    config_dir = MODELS_DIR / "mlp" / f"split_{split}" / version / config_name
+    config_dir.mkdir(parents=True, exist_ok=True)
+    
+    results_dir = RESULTS_DIR / "baseline" / "mlp" / f"split_{split}" / version
+    results_dir.mkdir(parents=True, exist_ok=True)
+    
+    loss_dir = RESULTS_DIR / "loss" / "mlp" / f"split_{split}" / version
+    loss_dir.mkdir(parents=True, exist_ok=True)
+    
+    # 加载数据
+    data = load_data(split, version)
+    n_train = len(data['train']['text'])
+    
+    print(f"训练集: {n_train}, 验证集: {len(data['val']['text'])}, 测试集: {len(data['test']['text'])}")
+    
+    # 创建并拟合 TF-IDF (只在 train 上 fit)
+    print("\n[1/5] 拟合 TF-IDF (只在 train 上)...")
+    vectorizer = create_vectorizer()
+    X_train = vectorizer.fit_transform(data['train']['text'])  # fit 在 train 上
+    X_val = vectorizer.transform(data['val']['text'])          # val 只 transform
+    X_test = vectorizer.transform(data['test']['text'])        # test 只 transform
+    
+    print(f"TF-IDF 词表大小: {len(vectorizer.vocabulary_)}")
+    print(f"实际特征维度: {X_train.shape[1]}")
+    
+    # 获取类别
+    classes = np.unique(data['train']['target'])
+    
+    # 训练 MLP
+    print(f"\n[2/5] 训练 MLP...")
+    start_time = time.time()
+    
+    clf, train_losses = train_mlp(
+        X_train, data['train']['target'], hidden_layer_sizes, alpha
+    )
+    
+    train_time = time.time() - start_time
+    print(f"训练完成, 耗时: {train_time:.1f}秒")
+    print(f"实际迭代次数: {clf.n_iter_}")
+    print(f"最终训练 Loss: {clf.loss_:.6f}")
+    
+    # 保存训练 loss
+    loss_file = loss_dir / f"loss_{config_name}.json"
+    with open(loss_file, 'w') as f:
+        json.dump({
+            'train_losses': train_losses,
+            'n_iter': clf.n_iter_,
+            'config': {
+                'hidden_layer_sizes': hidden_layer_sizes,
+                'alpha': alpha,
+                'split': split,
+                'version': version
+            }
+        }, f)
+    
+    # 评估
+    print("\n[3/5] 评估模型...")
+    
+    train_metrics, _ = evaluate(clf, X_train, data['train']['target'], classes)
+    val_metrics, _ = evaluate(clf, X_val, data['val']['target'], classes)
+    test_metrics, test_preds = evaluate(clf, X_test, data['test']['target'], classes)
+    
+    print(f"\n训练集: Acc={train_metrics['accuracy']:.4f}, F1={train_metrics['f1_macro']:.4f}")
+    print(f"验证集: Acc={val_metrics['accuracy']:.4f}, F1={val_metrics['f1_macro']:.4f}")
+    print(f"测试集: Acc={test_metrics['accuracy']:.4f}, F1={test_metrics['f1_macro']:.4f}")
+    
+    # 保存模型 (vectorizer, classifier) 元组
+    print("\n[4/5] 保存模型...")
+    model = (vectorizer, clf)
+    model_file = config_dir / "model.pkl"
+    with open(model_file, 'wb') as f:
+        pickle.dump(model, f)
+    
+    # 保存结果
+    print("\n[5/5] 保存结果...")
+    results = {
+        'config': {
+            'model': 'mlp',
+            'split': split,
+            'version': version,
+            'hidden_layer_sizes': hidden_layer_sizes,
+            'alpha': alpha,
+            'max_iter': MAX_ITER,
+            'n_iter': clf.n_iter_,
+            'n_train': n_train,
+            'vocab_size': len(vectorizer.vocabulary_)
+        },
+        'train_metrics': train_metrics,
+        'val_metrics': val_metrics,
+        'test_metrics': test_metrics,
+        'train_time': train_time
+    }
+    
+    results_file = results_dir / f"results_{config_name}.json"
+    with open(results_file, 'w') as f:
+        json.dump(results, f, indent=2)
+    
+    print(f"\n结果已保存到 {results_file}")
+    
+    return results
+
+
+def main():
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='MLP 训练脚本')
+    parser.add_argument('--split', type=str, default='all',
+                        choices=['A', 'B', 'C', 'all'])
+    parser.add_argument('--version', type=str, default='all',
+                        choices=['raw', 'body_only', 'subject_body', 'subject_body_author', 'all'])
+    parser.add_argument('--hidden', type=str, default=None,
+                        help='隐藏层结构，如 "100,50" 表示 (100,50)')
+    parser.add_argument('--alpha', type=float, default=None,
+                        help='正则化参数 alpha')
+    
+    args = parser.parse_args()
+    
+    splits = ['A', 'B', 'C'] if args.split == 'all' else [args.split]
+    versions = ['raw', 'body_only', 'subject_body', 'subject_body_author'] if args.version == 'all' else [args.version]
+    
+    if args.hidden:
+        hidden = tuple(map(int, args.hidden.split(',')))
+        hidden_layers = [hidden]
+    else:
+        hidden_layers = HIDDEN_LAYERS
+    
+    if args.alpha:
+        alphas = [args.alpha]
+    else:
+        alphas = ALPHAS
+    
+    all_results = []
+    
+    for split in splits:
+        for version in versions:
+            for hidden in hidden_layers:
+                for alpha in alphas:
+                    try:
+                        result = train_and_evaluate(split, version, hidden, alpha)
+                        all_results.append(result)
+                    except Exception as e:
+                        print(f"\n[ERROR] 训练失败: split={split}, version={version}")
+                        print(f"hidden={hidden}, alpha={alpha}")
+                        print(f"错误: {e}")
+                        import traceback
+                        traceback.print_exc()
+    
+    # 保存汇总结果
+    if all_results:
+        summary_df = pd.DataFrame([{
+            'model': r['config']['model'],
+            'split': r['config']['split'],
+            'version': r['config']['version'],
+            'hidden_layer_sizes': str(r['config']['hidden_layer_sizes']),
+            'alpha': r['config']['alpha'],
+            'val_accuracy': r['val_metrics']['accuracy'],
+            'val_f1_macro': r['val_metrics']['f1_macro'],
+            'test_accuracy': r['test_metrics']['accuracy'],
+            'test_f1_macro': r['test_metrics']['f1_macro']
+        } for r in all_results])
+        
+        summary_file = RESULTS_DIR / "baseline" / "mlp" / "summary.csv"
+        summary_df.to_csv(summary_file, index=False)
+        print(f"\n汇总结果已保存到 {summary_file}")
+
+
+if __name__ == "__main__":
+    main()

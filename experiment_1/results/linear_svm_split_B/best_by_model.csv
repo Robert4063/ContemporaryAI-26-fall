@@ -1,0 +1,4 @@
+model,split,version,hidden_layer_sizes,alpha,eval_set,accuracy,macro_f1,precision,recall,config_id,C,n_iter,fit_seconds,n_features,converged
+svm,split_B,subject_body,,,val,0.943089430894309,0.9431724428054006,0.944688092056513,0.943456614509246,svm_split_B_subject_body_C1.0,1.0,,,,
+mlp,split_B,subject_body_author,"(100,)",0.001,val,0.959349593495935,0.959842903357406,0.9623859710701816,0.959601706970128,mlp_split_B_subject_body_author_h100_a0.001,,,,,
+linear_svm,split_B,raw,,,val,0.962059620596206,0.9624579734230059,0.9646270152084107,0.9622332859174966,linear_svm_split_B_raw_C1.0,1.0,41.0,0.3545120999988285,20000.0,True

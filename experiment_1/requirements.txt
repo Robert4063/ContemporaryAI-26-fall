@@ -1,0 +1,15 @@
+# Experiment environment: Python 3.10.21, scikit-learn 1.7.1.
+numpy==2.2.5
+pandas==2.3.3
+scikit-learn==1.7.1
+scipy==1.15.3
+joblib==1.5.3
+threadpoolctl==3.5.0
+matplotlib==3.10.9
+tzdata==2026.3
+
+# Report export and submission verification.
+reportlab==4.4.9
+pypdf==6.10.0
+pdfplumber==0.11.9
+Pillow==12.3.0

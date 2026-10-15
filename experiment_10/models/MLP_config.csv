@@ -1,0 +1,2 @@
+model,split,version,hidden_layer_sizes,alpha,val_acc,test_acc,val_f1,test_f1
+MLP,B,subject_body_author,"(50,)",0.001,0.962059620596206,0.9362279511533242,0.9624658527908576,0.936672165983966

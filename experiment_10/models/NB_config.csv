@@ -1,0 +1,2 @@
+model,split,version,val_acc,test_acc,val_f1,test_f1
+NB,B,subject_body,0.962059620596206,0.9253731343283582,0.9623393237639812,0.9265749366301206

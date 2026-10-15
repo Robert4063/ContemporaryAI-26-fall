@@ -1,0 +1,19 @@
+{
+  "signature": {
+    "config_id": "svm_split_B_subject_body_C1.0",
+    "test_sha256": "f1c22584dbd7ca47265354da9f98ff75248f3bfa133152b8ceec883942620c6a",
+    "model_sha256": "5ad948948fec662e01cbac8102087371c20c2859c0c7b77fe384bf241d20fbb1",
+    "vectorizer_sha256": "c7dc2c95d81dd549d55f3d65f2a71b858dd21842873c601a5f6c8f292b6ce32a"
+  },
+  "n_test": 737,
+  "metrics": {
+    "accuracy": 0.9294436906377205,
+    "macro_f1": 0.9298610881047467,
+    "precision": 0.9307461272128131,
+    "recall": 0.9296727138097001
+  },
+  "output_sha256": {
+    "svm_predictions.csv": "9074d78579a9a0189f52eff0cff04b96cfad4bd743707e74ab4b0aa7aaeb30f2",
+    "svm_confusion_matrix.csv": "9df8a4dcae9f9a3089694caf3c3b9b259942b69adb6f5925ae20cf7db5fe386a"
+  }
+}
