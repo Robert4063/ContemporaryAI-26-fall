@@ -28,4 +28,6 @@ outputs/
 
 # 系统文件
 .DS_Store
-Thumbs.db
+Thumbs.db__pycache__/
+*.pyc
+.work/
